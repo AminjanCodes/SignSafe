@@ -1,0 +1,129 @@
+/* SignSafe – Minimal Professional Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --border: #e0e0e0;
+  --border-light: #f0f0f0;
+  --bg-page: #fafafa;
+  --bg-card: #ffffff;
+  --bg-subtle: #f5f5f5;
+  --accent: #1a1a1a;
+  --accent-muted: #444;
+  --safe: #2d8a56;
+  --safe-bg: #edf7f0;
+  --safe-border: #c6e4d0;
+  --warn: #a16207;
+  --warn-bg: #fef9ec;
+  --warn-border: #f0dca0;
+  --danger: #c53030;
+  --danger-bg: #fef2f2;
+  --danger-border: #f0c0c0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Score ring animation */
+.score-circle {
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* Drag-drop visual cue */
+.dropzone.dragover {
+  border-color: var(--accent) !important;
+  background-color: var(--bg-subtle) !important;
+}
+
+/* Subtle card lift on hover */
+.card-hover { transition: box-shadow 0.2s ease; }
+.card-hover:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+/* Selection */
+::selection { background: #1a1a1a; color: #fff; }
+
+/* Print */
+@media print {
+  body { background: #fff !important; }
+  .no-print, header, footer, #input-section, #progress-section, .ad-slot, .action-buttons, .sample-bar { display: none !important; }
+  #report-section { display: block !important; box-shadow: none !important; }
+}
+
+/* AdSense Slot Styles */
+.ad-slot {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.ad-slot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.75rem;
+  background: #f9fafb;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9ca3af;
+}
+
+.ad-slot-header a {
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.ad-slot-header a:hover {
+  color: #111827;
+  text-decoration: underline;
+}
+
+.ad-slot-content {
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+/* When Pro is active: Hide all ads completely! */
+body.is-pro .ad-slot,
+body.is-pro .ad-banner,
+body.is-pro #pro-banner-anchor,
+body.is-pro .free-only {
+  display: none !important;
+}
+
+body:not(.is-pro) .pro-only {
+  display: none !important;
+}

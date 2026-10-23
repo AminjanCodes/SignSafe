@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignSafe – Understand Any Contract Before You Sign</title>
+  <meta name="description" content="Paste or upload any contract and get a plain-English risk report in 30 seconds. Free, private, and secure.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#1a1a1a' },
+            safe: { DEFAULT: '#2d8a56', light: '#edf7f0', border: '#c6e4d0' },
+            warn: { DEFAULT: '#a16207', light: '#fef9ec', border: '#f0dca0' },
+            danger: { DEFAULT: '#c53030', light: '#fef2f2', border: '#f0c0c0' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google AdSense (Configurable Publisher ID) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous" id="adsense-script"></script>
+
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="min-h-screen flex flex-col bg-[#fafafa] text-[#1a1a1a]">
+
+  <!-- Minimal Header -->
+  <header class="sticky top-0 z-40 bg-white border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-white">
+          <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i>
+        </div>
+        <span class="text-lg font-bold tracking-tight">SignSafe</span>
+      </a>
+      
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md">
+          <i data-lucide="lock" class="w-3 h-3"></i> Private &amp; Secure
+        </span>
+        
+        <!-- Pro Upgrade / Member Button -->
+        <button id="btn-pro-header" onclick="openProModal()" class="text-xs font-semibold px-2.5 py-1 rounded-md bg-gray-900 hover:bg-black text-white flex items-center gap-1.5 transition-colors shadow-sm">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
+          <span id="header-pro-text">Go Ad-Free ($5/mo)</span>
+        </button>
+
+        <!-- Settings Button -->
+        <button id="btn-api-modal" class="text-xs text-gray-500 hover:text-gray-900 p-1.5 rounded hover:bg-gray-100 transition-colors" title="Settings">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
+
+    <!-- Hero – Simple, clear -->
+    <div class="text-center max-w-2xl mx-auto mb-8">
+      <h1 class="text-2xl sm:text-4xl font-bold tracking-tight leading-tight">
+        Understand any contract<br>before you sign it
+      </h1>
+      <p class="mt-3 text-gray-500 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
+        Paste or upload a contract. Get a plain-English report with risk score, dangerous clauses explained, and questions to ask — in 30 seconds.
+      </p>
+      <div class="mt-4 flex flex-wrap justify-center gap-4 text-xs text-gray-400">
+        <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 30-second analysis</span>
+        <span class="flex items-center gap-1"><i data-lucide="eye-off" class="w-3.5 h-3.5"></i> Nothing stored</span>
+        <span class="flex items-center gap-1"><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Free to use</span>
+      </div>
+    </div>
+
+    <!-- Ad Slot 1: Top Responsive Banner (Free users only) -->
+    <div class="ad-slot max-w-3xl mx-auto mb-6">
+      <div class="ad-slot-header">
+        <span>Advertisement</span>
+        <a href="javascript:void(0)" onclick="openProModal()">Remove ads with Pro ($5/mo) →</a>
+      </div>
+      <div class="ad-slot-content">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1000000001"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <!-- Clean fallback shown when AdSense is awaiting approval or in local development -->
+        <div class="ad-fallback text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between w-full px-2 gap-2">
+          <div class="flex items-center gap-2 text-left">
+            <span class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs shrink-0">AD</span>
+            <span>Protect your rights before signing. Get landlord and renter liability protection starting at $5/mo.</span>
+          </div>
+          <button onclick="openProModal()" class="shrink-0 text-[11px] font-semibold text-gray-900 hover:underline">Go Ad-Free →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample Contracts Bar -->
+    <div class="sample-bar max-w-3xl mx-auto mb-5">
+      <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">Try a sample</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <button onclick="loadSample('rental_agreement')" class="text-left p-2.5 rounded-lg border border-gray-200 bg-white hover:border-gray-400 transition-colors text-xs group card-hover">
+          <span class="font-semibold text-gray-800 group-hover:text-black">Apartment Lease</span>
+          <p class="text-[11px] text-gray-400 mt-0.5 truncate">Auto-renewal &amp; deposit traps</p>
+        </button>
+        <button onclick="loadSample('freelance_contract')" class="text-left p-2.5 rounded-lg border border-gray-200 bg-white hover:border-gray-400 transition-colors text-xs group card-hover">
+          <span class="font-semibold text-gray-800 group-hover:text-black">Freelance Contract</span>
+          <p class="text-[11px] text-gray-400 mt-0.5 truncate">One-sided IP &amp; payment terms</p>
+        </button>
+        <button onclick="loadSample('job_offer')" class="text-left p-2.5 rounded-lg border border-gray-200 bg-white hover:border-gray-400 transition-colors text-xs group card-hover">
+          <span class="font-semibold text-gray-800 group-hover:text-black">Job Offer</span>
+          <p class="text-[11px] text-gray-400 mt-0.5 truncate">Training clawback &amp; non-compete</p>
+        </button>
+        <button onclick="loadSample('safe_lease')" class="text-left p-2.5 rounded-lg border border-gray-200 bg-white hover:border-gray-400 transition-colors text-xs group card-hover">
+          <span class="font-semibold text-gray-800 group-hover:text-black">Fair Lease (Low Risk)</span>
+          <p class="text-[11px] text-gray-400 mt-0.5 truncate">Balanced &amp; standard terms</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- Input Card -->
+    <div id="input-section" class="max-w-3xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-6 mb-8">
+
+      <!-- Tabs -->
+      <div class="flex items-center gap-1 border-b border-gray-100 pb-3 mb-4">
+        <button id="tab-paste" onclick="switchTab('paste')" class="px-3 py-1.5 text-sm font-semibold rounded-md bg-gray-900 text-white flex items-center gap-1.5 transition-all">
+          <i data-lucide="type" class="w-3.5 h-3.5"></i> Paste Text
+        </button>
+        <button id="tab-upload" onclick="switchTab('upload')" class="px-3 py-1.5 text-sm font-semibold rounded-md text-gray-500 hover:bg-gray-100 flex items-center gap-1.5 transition-all">
+          <i data-lucide="file-up" class="w-3.5 h-3.5"></i> Upload File
+        </button>
+      </div>
+
+      <!-- Paste Panel -->
+      <div id="panel-paste">
+        <textarea
+          id="contract-text"
+          rows="9"
+          placeholder="Paste your contract, agreement, or specific clauses here..."
+          class="w-full rounded-lg border border-gray-200 p-3.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none leading-relaxed resize-y"
+        ></textarea>
+        <div class="flex items-center justify-between mt-2 text-xs text-gray-400">
+          <div><span id="char-count">0 chars</span> · <span id="word-count">0 words</span></div>
+          <div class="flex gap-1">
+            <button onclick="pasteFromClipboard()" class="px-2 py-0.5 rounded hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors">Paste</button>
+            <button onclick="clearText()" class="px-2 py-0.5 rounded hover:bg-gray-100 text-gray-400 hover:text-red-600 transition-colors">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Panel -->
+      <div id="panel-upload" class="hidden">
+        <div
+          id="dropzone"
+          class="dropzone border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400 transition-colors flex flex-col items-center justify-center min-h-[200px]"
+        >
+          <i data-lucide="upload" class="w-8 h-8 text-gray-400 mb-3"></i>
+          <p class="text-sm font-medium text-gray-700">Drop your document here or click to browse</p>
+          <p class="text-xs text-gray-400 mt-1">PDF, Word (.docx), or Text (.txt) · Max 15 MB</p>
+          <input type="file" id="file-input" accept=".pdf,.docx,.doc,.txt,.md,.rtf" class="hidden">
+        </div>
+
+        <div id="file-preview" class="hidden mt-3 p-3 rounded-lg border border-gray-200 bg-gray-50 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="file-text" class="w-5 h-5 text-gray-600"></i>
+            <div>
+              <p id="file-name" class="text-sm font-medium text-gray-800 truncate max-w-xs">document.pdf</p>
+              <p id="file-size" class="text-xs text-gray-400">120 KB</p>
+            </div>
+          </div>
+          <button onclick="removeSelectedFile()" class="p-1 text-gray-400 hover:text-red-600 rounded transition-colors">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-5 pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-xs text-gray-400 flex items-center gap-1">
+          <i data-lucide="shield" class="w-3.5 h-3.5"></i> Processed in memory. Never stored.
+        </p>
+        <button
+          id="btn-analyze"
+          onclick="startAnalysis()"
+          class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-[#1a1a1a] hover:bg-black text-white font-semibold text-sm shadow-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <i data-lucide="scan-search" class="w-4 h-4"></i>
+          Analyze Contract
+        </button>
+      </div>
+
+      <!-- Error -->
+      <div id="error-box" class="hidden mt-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2">
+        <i data-lucide="alert-circle" class="w-4 h-4 text-red-500 shrink-0 mt-0.5"></i>
+        <span class="flex-1" id="error-message">An error occurred.</span>
+        <button onclick="hideError()" class="text-red-400 hover:text-red-700"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+      </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div id="progress-section" class="hidden max-w-xl mx-auto bg-white rounded-xl border border-gray-200 p-8 shadow-sm text-center space-y-5 my-10">
+      <div class="relative w-12 h-12 mx-auto">
+        <div class="absolute inset-0 rounded-full border-[3px] border-gray-200"></div>
+        <div class="absolute inset-0 rounded-full border-[3px] border-gray-800 border-t-transparent animate-spin"></div>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-800" id="progress-title">Analyzing contract...</h3>
+        <p class="text-xs text-gray-400 mt-1" id="progress-subtitle">This usually takes 10–30 seconds</p>
+      </div>
+      <div class="space-y-1.5 text-left max-w-sm mx-auto text-xs">
+        <div id="step-1" class="flex items-center gap-2 p-2 rounded bg-gray-50 text-gray-500">
+          <div class="step-icon w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-500 shrink-0">1</div>
+          <span class="flex-1">Extracting clauses &amp; detecting document type</span>
+          <i data-lucide="check" class="w-3.5 h-3.5 text-green-600 hidden step-done"></i>
+        </div>
+        <div id="step-2" class="flex items-center gap-2 p-2 rounded bg-gray-50 text-gray-500">
+          <div class="step-icon w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-500 shrink-0">2</div>
+          <span class="flex-1">Scanning for hidden penalties &amp; traps</span>
+          <i data-lucide="check" class="w-3.5 h-3.5 text-green-600 hidden step-done"></i>
+        </div>
+        <div id="step-3" class="flex items-center gap-2 p-2 rounded bg-gray-50 text-gray-500">
+          <div class="step-icon w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-500 shrink-0">3</div>
+          <span class="flex-1">Evaluating liability &amp; restrictive terms</span>
+          <i data-lucide="check" class="w-3.5 h-3.5 text-green-600 hidden step-done"></i>
+        </div>
+        <div id="step-4" class="flex items-center gap-2 p-2 rounded bg-gray-50 text-gray-500">
+          <div class="step-icon w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-500 shrink-0">4</div>
+          <span class="flex-1">Translating to plain English &amp; generating questions</span>
+          <i data-lucide="check" class="w-3.5 h-3.5 text-green-600 hidden step-done"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ REPORT ═══════════ -->
+    <div id="report-section" class="hidden max-w-3xl mx-auto space-y-4">
+
+      <!-- Report Header -->
+      <div class="bg-white rounded-xl border border-gray-200 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2 mb-0.5">
+            <span id="rep-contract-type" class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded">Type</span>
+          </div>
+          <h2 id="rep-contract-title" class="text-lg font-bold text-gray-900">Contract Analysis Report</h2>
+        </div>
+        <div class="flex items-center gap-2 action-buttons">
+          <button onclick="printReport()" class="text-xs text-gray-500 hover:text-gray-800 px-2.5 py-1.5 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors flex items-center gap-1">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print / PDF
+          </button>
+          <button onclick="copySummaryText()" class="text-xs text-gray-500 hover:text-gray-800 px-2.5 py-1.5 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors flex items-center gap-1">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+          </button>
+          <button onclick="resetAnalysis()" class="text-xs font-semibold text-white bg-gray-900 hover:bg-black px-3 py-1.5 rounded-md transition-colors flex items-center gap-1">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i> New Scan
+          </button>
+        </div>
+      </div>
+
+      <!-- Verdict & Score Card -->
+      <div id="verdict-card" class="rounded-xl p-5 sm:p-6 text-white relative overflow-hidden bg-[#1a1a1a]">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+
+          <!-- Score Ring -->
+          <div class="md:col-span-3 flex flex-col items-center justify-center">
+            <div class="relative w-28 h-28 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.12)" stroke-width="8" fill="transparent" />
+                <circle id="score-circle-bar" cx="60" cy="60" r="50" stroke="#ef4444" stroke-width="8" stroke-linecap="round" fill="transparent" stroke-dasharray="314.159" stroke-dashoffset="314.159" class="score-circle" />
+              </svg>
+              <div class="absolute flex flex-col items-center">
+                <span id="rep-risk-score" class="text-3xl font-bold tracking-tight">0</span>
+                <span class="text-[9px] uppercase font-medium tracking-widest text-gray-400">/ 100</span>
+              </div>
+            </div>
+            <span id="rep-risk-badge" class="mt-2 px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-white/10 text-gray-300">
+              Risk Level
+            </span>
+          </div>
+
+          <!-- Verdict Text -->
+          <div class="md:col-span-9 space-y-2">
+            <h3 id="rep-verdict" class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+              Verdict
+            </h3>
+            <p id="rep-verdict-explanation" class="text-sm text-gray-400 leading-relaxed"></p>
+            <p class="text-xs text-gray-500 pt-2 border-t border-white/10 flex items-start gap-1.5">
+              <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5"></i>
+              <span id="rep-advice"></span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-4 gap-2 mt-5 pt-4 border-t border-white/10">
+          <div class="text-center">
+            <p class="text-[10px] text-gray-500 uppercase">Risk</p>
+            <p id="stat-risk-level" class="text-xs font-semibold text-gray-300 mt-0.5">—</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[10px] text-gray-500 uppercase">Red Flags</p>
+            <p id="stat-red-flags" class="text-xs font-semibold text-gray-300 mt-0.5">0</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[10px] text-gray-500 uppercase">Traps</p>
+            <p id="stat-traps" class="text-xs font-semibold text-gray-300 mt-0.5">0</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[10px] text-gray-500 uppercase">Questions</p>
+            <p id="stat-questions" class="text-xs font-semibold text-gray-300 mt-0.5">0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plain English Summary -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
+        <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
+          <i data-lucide="message-circle" class="w-4 h-4 text-gray-500"></i>
+          What this contract actually says
+        </h3>
+        <p id="rep-summary" class="text-sm text-gray-600 leading-relaxed bg-gray-50 p-3.5 rounded-lg border border-gray-100"></p>
+      </div>
+
+      <!-- Ad Slot 2: Mid-Report In-Feed Ad (Free users only) -->
+      <div class="ad-slot">
+        <div class="ad-slot-header">
+          <span>Sponsored</span>
+          <a href="javascript:void(0)" onclick="openProModal()">Hide ads with Pro ($5/mo) →</a>
+        </div>
+        <div class="ad-slot-content">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="1000000002"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <div class="ad-fallback text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between w-full px-2 gap-2">
+            <div class="flex items-center gap-2 text-left">
+              <span class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs shrink-0">AD</span>
+              <span>Need an attorney review for high-stake contracts? Compare vetted legal plans starting at $15/mo.</span>
+            </div>
+            <button onclick="openProModal()" class="shrink-0 text-[11px] font-semibold text-gray-900 hover:underline">Go Ad-Free →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Red Flags -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-gray-500"></i>
+            Dangerous Clauses
+          </h3>
+          <span id="rep-flags-badge" class="text-[10px] font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">0 found</span>
+        </div>
+        <div id="red-flags-container" class="space-y-2.5"></div>
+      </div>
+
+      <!-- Hidden Fees & Traps -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
+            <i data-lucide="circle-dollar-sign" class="w-4 h-4 text-gray-500"></i>
+            Hidden Charges &amp; Penalties
+          </h3>
+          <span id="rep-traps-badge" class="text-[10px] font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">0 found</span>
+        </div>
+        <div id="traps-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+      </div>
+
+      <!-- Questions to Ask -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
+            <i data-lucide="help-circle" class="w-4 h-4 text-gray-500"></i>
+            Questions to ask before signing
+          </h3>
+          <button onclick="copyAllQuestions()" class="text-[10px] font-medium text-gray-500 hover:text-gray-800 px-2 py-0.5 rounded hover:bg-gray-100 transition-colors flex items-center gap-1">
+            <i data-lucide="copy" class="w-3 h-3"></i> Copy all
+          </button>
+        </div>
+        <div id="questions-container" class="space-y-2"></div>
+      </div>
+
+      <!-- Section Breakdown -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+        <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
+          <i data-lucide="list" class="w-4 h-4 text-gray-500"></i>
+          Section-by-section breakdown
+        </h3>
+        <div id="sections-container" class="space-y-1.5"></div>
+      </div>
+
+      <!-- Fair Clauses -->
+      <div id="fair-clauses-wrapper" class="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+        <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
+          <i data-lucide="check-circle" class="w-4 h-4 text-gray-500"></i>
+          Fair &amp; standard terms
+        </h3>
+        <ul id="fair-clauses-container" class="space-y-1.5 text-xs text-gray-600"></ul>
+      </div>
+
+      <!-- Pro Upsell Card (Free users only) -->
+      <div id="pro-banner-anchor" class="rounded-xl p-5 bg-gray-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Need an ad-free experience?</p>
+          <h3 class="text-base font-bold mt-0.5">SignSafe Pro — $5 / month</h3>
+          <p class="text-xs text-gray-400 mt-1 max-w-md">Browse completely ad-free, get unlimited high-speed contract scans, and unlock deep redline counter-clauses.</p>
+        </div>
+        <div class="shrink-0 text-center">
+          <p class="text-lg font-bold">$5 <span class="text-xs font-normal text-gray-400">/ month</span></p>
+          <button onclick="openProModal()" class="mt-1.5 px-5 py-2 rounded-lg bg-white text-gray-900 font-semibold text-xs hover:bg-gray-100 transition-colors">
+            Upgrade to Pro
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Ad Slot 3: Bottom Banner Ad (Free users only) -->
+    <div class="ad-slot max-w-3xl mx-auto mt-8">
+      <div class="ad-slot-header">
+        <span>Advertisement</span>
+        <a href="javascript:void(0)" onclick="openProModal()">Remove ads with Pro ($5/mo) →</a>
+      </div>
+      <div class="ad-slot-content">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1000000003"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <div class="ad-fallback text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between w-full px-2 gap-2">
+          <div class="flex items-center gap-2 text-left">
+            <span class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs shrink-0">AD</span>
+            <span>Sign contracts securely with digital e-signatures and encrypted storage.</span>
+          </div>
+          <button onclick="openProModal()" class="shrink-0 text-[11px] font-semibold text-gray-900 hover:underline">Go Ad-Free ($5/mo) →</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 py-8 mt-12 text-gray-400 text-xs">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 space-y-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <div class="w-5 h-5 rounded bg-gray-900 flex items-center justify-center text-white text-[10px] font-bold">S</div>
+          <span class="font-medium text-gray-600">SignSafe</span>
+          <span class="text-gray-300">•</span>
+          <span class="text-gray-400 text-[11px]">Free contract guardian supported by Google AdSense &amp; Pro subscriptions</span>
+        </div>
+        <div class="flex items-center gap-4 text-gray-400">
+          <a href="javascript:void(0)" onclick="openProModal()" class="text-gray-600 hover:text-black font-semibold">Pro ($5/mo)</a>
+          <a href="#" class="hover:text-gray-700 transition-colors">Privacy</a>
+          <a href="#" class="hover:text-gray-700 transition-colors">Terms</a>
+        </div>
+      </div>
+      <p class="text-[11px] text-gray-400 leading-relaxed max-w-3xl">
+        <strong class="text-gray-500">Disclaimer:</strong> SignSafe is an educational tool that helps you understand contracts. It is <strong>not a law firm</strong> and does not provide legal advice. Always consult a qualified attorney before signing binding agreements.
+      </p>
+      <p class="text-center text-gray-300 text-[10px]">© 2026 SignSafe. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Pro Subscription Modal ($5/month) -->
+  <div id="pro-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 border border-gray-200">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-gray-900 text-white flex items-center justify-center font-bold text-xs">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-gray-900">SignSafe Pro</h3>
+            <p class="text-[11px] text-gray-400">100% Ad-Free &amp; Unlimited Scans</p>
+          </div>
+        </div>
+        <button onclick="closeProModal()" class="text-gray-400 hover:text-gray-700 p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Pricing Badge -->
+      <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Monthly Plan</span>
+          <p class="text-2xl font-black text-gray-900 mt-0.5">$5 <span class="text-xs font-normal text-gray-500">/ month</span></p>
+          <span class="text-[11px] text-green-700 font-medium">Cancel anytime</span>
+        </div>
+        <div class="text-right">
+          <span class="px-2 py-1 rounded bg-black text-white text-[10px] font-bold uppercase tracking-wider">Most Popular</span>
+        </div>
+      </div>
+
+      <!-- Features Checklist -->
+      <div class="space-y-2.5 text-xs text-gray-700">
+        <div class="flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
+          <span><strong>100% Ad-Free:</strong> All Google AdSense banners are permanently hidden</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
+          <span><strong>Unlimited Audits:</strong> Scan long contracts without rate limits</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
+          <span><strong>AI Counter-Clause Generator:</strong> Ready-to-use alternative wording</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
+          <span><strong>Export to Word (.docx) &amp; High-Res PDF</strong></span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2 pt-2">
+        <button 
+          id="btn-activate-pro" 
+          onclick="toggleProMembership()" 
+          class="w-full py-2.5 rounded-lg bg-gray-900 hover:bg-black text-white font-semibold text-xs transition-colors flex items-center justify-center gap-2"
+        >
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i>
+          <span id="btn-activate-pro-text">Subscribe to Pro ($5/mo)</span>
+        </button>
+
+        <p class="text-[10px] text-center text-gray-400">
+          Instant activation. In production, this connects to Stripe or Lemon Squeezy checkout.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings / API Modal -->
+  <div id="api-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-xl max-w-sm w-full p-5 shadow-xl space-y-4 border border-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-gray-900">SignSafe Settings</h3>
+        <button onclick="closeApiModal()" class="text-gray-400 hover:text-gray-700"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Groq API Key (Optional)</label>
+          <input
+            type="password"
+            id="custom-api-key-input"
+            placeholder="gsk_..."
+            class="w-full text-xs font-mono p-2 rounded-lg border border-gray-300 focus:border-gray-500 focus:ring-1 focus:ring-gray-400 focus:outline-none"
+          >
+          <p class="text-[10px] text-gray-400 mt-1">Pre-configured with free Groq inference. Stored locally.</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Google AdSense Publisher ID</label>
+          <input
+            type="text"
+            id="adsense-pub-input"
+            placeholder="ca-pub-XXXXXXXXXXXXXXXX"
+            class="w-full text-xs font-mono p-2 rounded-lg border border-gray-300 focus:border-gray-500 focus:ring-1 focus:ring-gray-400 focus:outline-none"
+          >
+          <p class="text-[10px] text-gray-400 mt-1">Found in your Google AdSense Dashboard.</p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-1 border-t border-gray-100">
+        <button onclick="clearCustomApiKey()" class="px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded">Reset</button>
+        <button onclick="saveSettings()" class="px-3 py-1.5 text-xs font-semibold bg-gray-900 text-white rounded hover:bg-black">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

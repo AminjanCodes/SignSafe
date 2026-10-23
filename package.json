@@ -1,0 +1,9 @@
+{
+  "name": "signsafe",
+  "version": "1.0.0",
+  "description": "SignSafe - AI Contract Guardian",
+  "scripts": {
+    "dev": "python main.py",
+    "start": "python main.py"
+  }
+}
