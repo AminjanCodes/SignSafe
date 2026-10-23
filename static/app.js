@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
   setupEventListeners();
   loadSavedSettings();
+  checkUrlForProSuccess();
   initProState();
   initAdSense();
   updateCounters();
@@ -129,8 +130,20 @@ async function loadSample(key) {
 }
 
 // ── Pro Membership & Ad-Free System ($5/mo) ────────
+let stripePaymentUrl = localStorage.getItem('signsafe_stripe_url') || '';
+
 function isPro() {
   return localStorage.getItem('signsafe_is_pro') === 'true';
+}
+
+function checkUrlForProSuccess() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('pro') === 'success') {
+    localStorage.setItem('signsafe_is_pro', 'true');
+    initProState();
+    window.history.replaceState({}, document.title, window.location.pathname);
+    alert("🎉 Payment confirmed! Your SignSafe Pro subscription is now active. All ads are removed.");
+  }
 }
 
 function initProState() {
@@ -163,6 +176,44 @@ function openProModal() {
 
 function closeProModal() {
   document.getElementById('pro-modal')?.classList.add('hidden');
+}
+
+function handleStripeCheckout() {
+  if (stripePaymentUrl && stripePaymentUrl.startsWith('http')) {
+    window.location.href = stripePaymentUrl;
+  } else {
+    const link = prompt("Enter your Stripe / Lemon Squeezy Payment Link:\n(e.g., https://buy.stripe.com/...)\n\nOr click OK with blank to test-activate Pro right now:", stripePaymentUrl);
+    if (link === null) return;
+    if (link.trim().startsWith('http')) {
+      stripePaymentUrl = link.trim();
+      localStorage.setItem('signsafe_stripe_url', stripePaymentUrl);
+      window.location.href = stripePaymentUrl;
+    } else {
+      localStorage.setItem('signsafe_is_pro', 'true');
+      initProState();
+      alert("🎉 Pro activated! All ads have been removed.");
+      closeProModal();
+    }
+  }
+}
+
+function toggleLicenseInput() {
+  const box = document.getElementById('license-key-box');
+  if (box) box.classList.toggle('hidden');
+}
+
+function redeemLicenseKey() {
+  const input = document.getElementById('license-key-input');
+  const code = (input?.value || '').trim().toUpperCase();
+  const validCodes = ['SIGNSAFE', 'SIGNSAFE2026', 'PRO2026', 'VIP', 'VIPPRO'];
+  if (validCodes.includes(code)) {
+    localStorage.setItem('signsafe_is_pro', 'true');
+    initProState();
+    alert("🎉 Code successfully redeemed! SignSafe Pro is now active.");
+    closeProModal();
+  } else {
+    alert("Invalid code. Please check your key or use card checkout.");
+  }
 }
 
 function toggleProMembership() {

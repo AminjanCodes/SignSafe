@@ -529,17 +529,39 @@
       <!-- Action Buttons -->
       <div class="space-y-2 pt-2">
         <button 
-          id="btn-activate-pro" 
-          onclick="toggleProMembership()" 
-          class="w-full py-2.5 rounded-lg bg-gray-900 hover:bg-black text-white font-semibold text-xs transition-colors flex items-center justify-center gap-2"
+          id="btn-stripe-checkout" 
+          onclick="handleStripeCheckout()" 
+          class="w-full py-2.5 rounded-lg bg-gray-900 hover:bg-black text-white font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
         >
-          <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i>
-          <span id="btn-activate-pro-text">Subscribe to Pro ($5/mo)</span>
+          <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-300"></i>
+          <span>Pay $5/month with Card</span>
         </button>
 
-        <p class="text-[10px] text-center text-gray-400">
-          Instant activation. In production, this connects to Stripe or Lemon Squeezy checkout.
-        </p>
+        <div class="pt-2 border-t border-gray-100">
+          <button onclick="toggleLicenseInput()" class="text-[11px] text-gray-500 hover:text-black font-medium flex items-center justify-between w-full">
+            <span>Have a license key or test code?</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+          </button>
+          
+          <div id="license-key-box" class="hidden mt-2 flex items-center gap-1.5">
+            <input 
+              type="text" 
+              id="license-key-input" 
+              placeholder="e.g. SIGNSAFE-PRO" 
+              class="flex-1 text-xs uppercase font-mono p-1.5 rounded border border-gray-300 focus:outline-none focus:border-black"
+            >
+            <button onclick="redeemLicenseKey()" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold rounded transition-colors">
+              Activate
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-1 text-[10px] text-gray-400">
+          <span>Encrypted via Stripe / Lemon Squeezy</span>
+          <button onclick="toggleProMembership()" class="text-gray-400 hover:text-red-600 underline">
+            <span id="btn-activate-pro-text">Switch Mode (Dev Test)</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
