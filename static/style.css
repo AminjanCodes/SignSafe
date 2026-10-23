@@ -115,15 +115,3 @@ code, pre, .font-mono {
   padding: 0.75rem;
   text-align: center;
 }
-
-/* When Pro is active: Hide all ads completely! */
-body.is-pro .ad-slot,
-body.is-pro .ad-banner,
-body.is-pro #pro-banner-anchor,
-body.is-pro .free-only {
-  display: none !important;
-}
-
-body:not(.is-pro) .pro-only {
-  display: none !important;
-}

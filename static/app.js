@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
   setupEventListeners();
   loadSavedSettings();
-  checkUrlForProSuccess();
-  initProState();
   initAdSense();
   updateCounters();
 });
@@ -129,107 +127,6 @@ async function loadSample(key) {
   } catch (e) { showError("Could not load sample: " + e.message); }
 }
 
-// ── Pro Membership & Ad-Free System ($5/mo) ────────
-let stripePaymentUrl = localStorage.getItem('signsafe_stripe_url') || '';
-
-function isPro() {
-  return localStorage.getItem('signsafe_is_pro') === 'true';
-}
-
-function checkUrlForProSuccess() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('pro') === 'success') {
-    localStorage.setItem('signsafe_is_pro', 'true');
-    initProState();
-    window.history.replaceState({}, document.title, window.location.pathname);
-    alert("🎉 Payment confirmed! Your SignSafe Pro subscription is now active. All ads are removed.");
-  }
-}
-
-function initProState() {
-  const pro = isPro();
-  const body = document.body;
-  const headerProBtn = document.getElementById('btn-pro-header');
-  const headerProText = document.getElementById('header-pro-text');
-  const activateProBtnText = document.getElementById('btn-activate-pro-text');
-
-  if (pro) {
-    body.classList.add('is-pro');
-    if (headerProText) headerProText.innerText = '👑 Pro Active';
-    if (headerProBtn) {
-      headerProBtn.className = 'text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-50 border border-amber-200 text-amber-900 flex items-center gap-1.5 shadow-sm';
-    }
-    if (activateProBtnText) activateProBtnText.innerText = 'Switch Back to Free Plan';
-  } else {
-    body.classList.remove('is-pro');
-    if (headerProText) headerProText.innerText = 'Go Ad-Free ($5/mo)';
-    if (headerProBtn) {
-      headerProBtn.className = 'text-xs font-semibold px-2.5 py-1 rounded-md bg-gray-900 hover:bg-black text-white flex items-center gap-1.5 transition-colors shadow-sm';
-    }
-    if (activateProBtnText) activateProBtnText.innerText = 'Subscribe to Pro ($5/mo)';
-  }
-}
-
-function openProModal() {
-  document.getElementById('pro-modal')?.classList.remove('hidden');
-}
-
-function closeProModal() {
-  document.getElementById('pro-modal')?.classList.add('hidden');
-}
-
-function handleStripeCheckout() {
-  if (stripePaymentUrl && stripePaymentUrl.startsWith('http')) {
-    window.location.href = stripePaymentUrl;
-  } else {
-    const link = prompt("Enter your Stripe / Lemon Squeezy Payment Link:\n(e.g., https://buy.stripe.com/...)\n\nOr click OK with blank to test-activate Pro right now:", stripePaymentUrl);
-    if (link === null) return;
-    if (link.trim().startsWith('http')) {
-      stripePaymentUrl = link.trim();
-      localStorage.setItem('signsafe_stripe_url', stripePaymentUrl);
-      window.location.href = stripePaymentUrl;
-    } else {
-      localStorage.setItem('signsafe_is_pro', 'true');
-      initProState();
-      alert("🎉 Pro activated! All ads have been removed.");
-      closeProModal();
-    }
-  }
-}
-
-function toggleLicenseInput() {
-  const box = document.getElementById('license-key-box');
-  if (box) box.classList.toggle('hidden');
-}
-
-function redeemLicenseKey() {
-  const input = document.getElementById('license-key-input');
-  const code = (input?.value || '').trim().toUpperCase();
-  const validCodes = ['SIGNSAFE', 'SIGNSAFE2026', 'PRO2026', 'VIP', 'VIPPRO'];
-  if (validCodes.includes(code)) {
-    localStorage.setItem('signsafe_is_pro', 'true');
-    initProState();
-    alert("🎉 Code successfully redeemed! SignSafe Pro is now active.");
-    closeProModal();
-  } else {
-    alert("Invalid code. Please check your key or use card checkout.");
-  }
-}
-
-function toggleProMembership() {
-  const currentlyPro = isPro();
-  if (currentlyPro) {
-    localStorage.removeItem('signsafe_is_pro');
-    initProState();
-    alert("Switched to SignSafe Free Plan. Ads are now re-enabled.");
-  } else {
-    localStorage.setItem('signsafe_is_pro', 'true');
-    initProState();
-    alert("🎉 Welcome to SignSafe Pro! All ads have been removed and unlimited scans are active.");
-  }
-  closeProModal();
-}
-
 // ── Google AdSense Integration ─────────────────────
 async function initAdSense() {
   try {
@@ -255,17 +152,15 @@ async function initAdSense() {
     script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`;
   }
 
-  // If not pro, initialize adsbygoogle slots
-  if (!isPro()) {
-    try {
-      const ads = document.querySelectorAll('.adsbygoogle');
-      ads.forEach(ad => {
-        ad.setAttribute('data-ad-client', adsenseClientId);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      });
-    } catch (e) {
-      // AdSense script will run when loaded
-    }
+  // Initialize adsbygoogle slots
+  try {
+    const ads = document.querySelectorAll('.adsbygoogle');
+    ads.forEach(ad => {
+      ad.setAttribute('data-ad-client', adsenseClientId);
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    });
+  } catch (e) {
+    // AdSense script will run when loaded
   }
 }
 
@@ -360,16 +255,12 @@ async function executeRequest(url, payload, type) {
 
   try {
     const headers = {};
-    if (isPro()) {
-      headers['X-SignSafe-Pro'] = 'true';
-    }
-
     let opts;
     if (type === 'json') {
       headers['Content-Type'] = 'application/json';
       opts = { method: 'POST', headers, body: JSON.stringify(payload) };
     } else {
-      opts = { method: 'POST', headers, body: payload };
+      opts = { method: 'POST', body: payload };
     }
 
     const res = await fetch(url, opts);
