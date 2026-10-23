@@ -49,16 +49,13 @@
       </a>
       
       <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
+          <i data-lucide="check" class="w-3 h-3 text-emerald-600"></i> 100% Free
+        </span>
         <span class="hidden sm:flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md">
           <i data-lucide="lock" class="w-3 h-3"></i> Private &amp; Secure
         </span>
         
-        <!-- Pro Upgrade / Member Button -->
-        <button id="btn-pro-header" onclick="openProModal()" class="text-xs font-semibold px-2.5 py-1 rounded-md bg-gray-900 hover:bg-black text-white flex items-center gap-1.5 transition-colors shadow-sm">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
-          <span id="header-pro-text">Go Ad-Free ($5/mo)</span>
-        </button>
-
         <!-- Settings Button -->
         <button id="btn-api-modal" class="text-xs text-gray-500 hover:text-gray-900 p-1.5 rounded hover:bg-gray-100 transition-colors" title="Settings">
           <i data-lucide="settings" class="w-4 h-4"></i>
@@ -84,11 +81,11 @@
       </div>
     </div>
 
-    <!-- Ad Slot 1: Top Responsive Banner (Free users only) -->
+    <!-- Ad Slot 1: Top Responsive Banner -->
     <div class="ad-slot max-w-3xl mx-auto mb-6">
       <div class="ad-slot-header">
         <span>Advertisement</span>
-        <a href="javascript:void(0)" onclick="openProModal()">Remove ads with Pro ($5/mo) →</a>
+        <span class="text-[10px] text-gray-400 font-normal">Sponsored</span>
       </div>
       <div class="ad-slot-content">
         <ins class="adsbygoogle"
@@ -101,9 +98,8 @@
         <div class="ad-fallback text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between w-full px-2 gap-2">
           <div class="flex items-center gap-2 text-left">
             <span class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs shrink-0">AD</span>
-            <span>Protect your rights before signing. Get landlord and renter liability protection starting at $5/mo.</span>
+            <span>Protect your legal rights before signing. Get renter and freelancer liability protection starting at $5/mo.</span>
           </div>
-          <button onclick="openProModal()" class="shrink-0 text-[11px] font-semibold text-gray-900 hover:underline">Go Ad-Free →</button>
         </div>
       </div>
     </div>
@@ -332,11 +328,10 @@
         <p id="rep-summary" class="text-sm text-gray-600 leading-relaxed bg-gray-50 p-3.5 rounded-lg border border-gray-100"></p>
       </div>
 
-      <!-- Ad Slot 2: Mid-Report In-Feed Ad (Free users only) -->
+      <!-- Ad Slot 2: Mid-Report In-Feed Ad -->
       <div class="ad-slot">
         <div class="ad-slot-header">
           <span>Sponsored</span>
-          <a href="javascript:void(0)" onclick="openProModal()">Hide ads with Pro ($5/mo) →</a>
         </div>
         <div class="ad-slot-content">
           <ins class="adsbygoogle"
@@ -348,9 +343,8 @@
           <div class="ad-fallback text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between w-full px-2 gap-2">
             <div class="flex items-center gap-2 text-left">
               <span class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs shrink-0">AD</span>
-              <span>Need an attorney review for high-stake contracts? Compare vetted legal plans starting at $15/mo.</span>
+              <span>Need attorney review for high-stake contracts? Compare vetted legal services and protection plans.</span>
             </div>
-            <button onclick="openProModal()" class="shrink-0 text-[11px] font-semibold text-gray-900 hover:underline">Go Ad-Free →</button>
           </div>
         </div>
       </div>
@@ -410,29 +404,13 @@
         </h3>
         <ul id="fair-clauses-container" class="space-y-1.5 text-xs text-gray-600"></ul>
       </div>
-
-      <!-- Pro Upsell Card (Free users only) -->
-      <div id="pro-banner-anchor" class="rounded-xl p-5 bg-gray-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Need an ad-free experience?</p>
-          <h3 class="text-base font-bold mt-0.5">SignSafe Pro — $5 / month</h3>
-          <p class="text-xs text-gray-400 mt-1 max-w-md">Browse completely ad-free, get unlimited high-speed contract scans, and unlock deep redline counter-clauses.</p>
-        </div>
-        <div class="shrink-0 text-center">
-          <p class="text-lg font-bold">$5 <span class="text-xs font-normal text-gray-400">/ month</span></p>
-          <button onclick="openProModal()" class="mt-1.5 px-5 py-2 rounded-lg bg-white text-gray-900 font-semibold text-xs hover:bg-gray-100 transition-colors">
-            Upgrade to Pro
-          </button>
-        </div>
-      </div>
-
     </div>
 
-    <!-- Ad Slot 3: Bottom Banner Ad (Free users only) -->
+    <!-- Ad Slot 3: Bottom Banner Ad -->
     <div class="ad-slot max-w-3xl mx-auto mt-8">
       <div class="ad-slot-header">
         <span>Advertisement</span>
-        <a href="javascript:void(0)" onclick="openProModal()">Remove ads with Pro ($5/mo) →</a>
+        <span class="text-[10px] text-gray-400 font-normal">Sponsored</span>
       </div>
       <div class="ad-slot-content">
         <ins class="adsbygoogle"
@@ -444,9 +422,8 @@
         <div class="ad-fallback text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between w-full px-2 gap-2">
           <div class="flex items-center gap-2 text-left">
             <span class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs shrink-0">AD</span>
-            <span>Sign contracts securely with digital e-signatures and encrypted storage.</span>
+            <span>Sign contracts securely with digital e-signatures and encrypted cloud storage.</span>
           </div>
-          <button onclick="openProModal()" class="shrink-0 text-[11px] font-semibold text-gray-900 hover:underline">Go Ad-Free ($5/mo) →</button>
         </div>
       </div>
     </div>
@@ -461,12 +438,11 @@
           <div class="w-5 h-5 rounded bg-gray-900 flex items-center justify-center text-white text-[10px] font-bold">S</div>
           <span class="font-medium text-gray-600">SignSafe</span>
           <span class="text-gray-300">•</span>
-          <span class="text-gray-400 text-[11px]">Free contract guardian supported by Google AdSense &amp; Pro subscriptions</span>
+          <span class="text-gray-400 text-[11px]">Free contract guardian supported by Google AdSense</span>
         </div>
         <div class="flex items-center gap-4 text-gray-400">
-          <a href="javascript:void(0)" onclick="openProModal()" class="text-gray-600 hover:text-black font-semibold">Pro ($5/mo)</a>
-          <a href="#" class="hover:text-gray-700 transition-colors">Privacy</a>
-          <a href="#" class="hover:text-gray-700 transition-colors">Terms</a>
+          <a href="#" class="hover:text-gray-700 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-gray-700 transition-colors">Terms of Service</a>
         </div>
       </div>
       <p class="text-[11px] text-gray-400 leading-relaxed max-w-3xl">
@@ -475,96 +451,6 @@
       <p class="text-center text-gray-300 text-[10px]">© 2026 SignSafe. All rights reserved.</p>
     </div>
   </footer>
-
-  <!-- Pro Subscription Modal ($5/month) -->
-  <div id="pro-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 border border-gray-200">
-      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
-        <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-gray-900 text-white flex items-center justify-center font-bold text-xs">
-            <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-gray-900">SignSafe Pro</h3>
-            <p class="text-[11px] text-gray-400">100% Ad-Free &amp; Unlimited Scans</p>
-          </div>
-        </div>
-        <button onclick="closeProModal()" class="text-gray-400 hover:text-gray-700 p-1">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <!-- Pricing Badge -->
-      <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-between">
-        <div>
-          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Monthly Plan</span>
-          <p class="text-2xl font-black text-gray-900 mt-0.5">$5 <span class="text-xs font-normal text-gray-500">/ month</span></p>
-          <span class="text-[11px] text-green-700 font-medium">Cancel anytime</span>
-        </div>
-        <div class="text-right">
-          <span class="px-2 py-1 rounded bg-black text-white text-[10px] font-bold uppercase tracking-wider">Most Popular</span>
-        </div>
-      </div>
-
-      <!-- Features Checklist -->
-      <div class="space-y-2.5 text-xs text-gray-700">
-        <div class="flex items-center gap-2">
-          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
-          <span><strong>100% Ad-Free:</strong> All Google AdSense banners are permanently hidden</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
-          <span><strong>Unlimited Audits:</strong> Scan long contracts without rate limits</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
-          <span><strong>AI Counter-Clause Generator:</strong> Ready-to-use alternative wording</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0"></i>
-          <span><strong>Export to Word (.docx) &amp; High-Res PDF</strong></span>
-        </div>
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="space-y-2 pt-2">
-        <button 
-          id="btn-stripe-checkout" 
-          onclick="handleStripeCheckout()" 
-          class="w-full py-2.5 rounded-lg bg-gray-900 hover:bg-black text-white font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-        >
-          <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-300"></i>
-          <span>Pay $5/month with Card</span>
-        </button>
-
-        <div class="pt-2 border-t border-gray-100">
-          <button onclick="toggleLicenseInput()" class="text-[11px] text-gray-500 hover:text-black font-medium flex items-center justify-between w-full">
-            <span>Have a license key or test code?</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
-          </button>
-          
-          <div id="license-key-box" class="hidden mt-2 flex items-center gap-1.5">
-            <input 
-              type="text" 
-              id="license-key-input" 
-              placeholder="e.g. SIGNSAFE-PRO" 
-              class="flex-1 text-xs uppercase font-mono p-1.5 rounded border border-gray-300 focus:outline-none focus:border-black"
-            >
-            <button onclick="redeemLicenseKey()" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold rounded transition-colors">
-              Activate
-            </button>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between pt-1 text-[10px] text-gray-400">
-          <span>Encrypted via Stripe / Lemon Squeezy</span>
-          <button onclick="toggleProMembership()" class="text-gray-400 hover:text-red-600 underline">
-            <span id="btn-activate-pro-text">Switch Mode (Dev Test)</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Settings / API Modal -->
   <div id="api-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
