@@ -4,7 +4,7 @@ let currentMode = 'paste';
 let selectedFile = null;
 let currentReportData = null;
 let sampleCache = {};
-let adsenseClientId = 'ca-pub-XXXXXXXXXXXXXXXX';
+let adsenseClientId = 'ca-pub-2227975321090110';
 
 document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
